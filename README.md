@@ -6,17 +6,17 @@ Dalam sejarahnya, film menjadi media yang sangat berpengaruh jika dibandingkan  
 
 Dikarenakan  dengan  semakin  ramainya  penggemar  film. Terkadang  para  penggemar  film  mengalami  kebingungan  saat  mencari  informasi film di internet. Penggemar film terkadang mencari informasi film di beberapa situs  untuk  dibandingkan, tak jarang situs-situs tersebut mempunyai informasi yang berbeda-beda.
 
-Berdasarkan permasalahan tersebut, penelitian ini dilakukan untuk menciptakan sebuah rekomendasi dengan Collaborative Filtering. Sistem akan merekomendasikan sejumlah restoran berdasarkan rating yang telah diberikan sebelumnya. Dari data rating pengguna, kita akan mengidentifikasi restoran-restoran yang mirip dan belum pernah dikunjungi oleh pengguna untuk direkomendasikan.
+Berdasarkan permasalahan tersebut, penelitian ini dilakukan untuk menciptakan sebuah rekomendasi dengan teknik Content Based Filtering. Dengan menggunakan teknik ini sistem akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu dan juga sistem akan merekomendasikan item yang sama dengan yang telah Anda lihat.
 
 ## Business Understanding
 ###Problem Statement
-- Bagaimana perusahaan dapat merekomendasikan movie lain yang mungkin disukai dan belum pernah dikunjungi oleh pengguna?
+- Berdasarkan data mengenai pengguna, bagaimana membuat sistem rekomendasi yang menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna?
 
 ###Goals
-- Menghasilkan sejumlah rekomendasi movie yang sesuai dengan preferensi pengguna dan belum pernah dikunjungi sebelumnya.
+- Membuat model development yang dapat menghasilkan sejumlah rekomendasi movie yang dipersonalisasi untuk pengguna.
 
 ###Solution Statement
-- Menggunakan teknik Collaborative Filtering yang akan merekomendasikan sejumlah movie berdasarkan rating yang sudah ada sebelumnya.
+- Menggunakan teknik content-based filtering yang akan merekomendasikan sejumlah movie berdasarkan item serupa yang pernah disukai  di masa lalu atau sedang dilihat di masa kini kepada pengguna.
 
 ## Data Understanding
 penelitian ini menggunakan dataset rekomendasi film yang dapat diunduh di: [Movie Recommenadtion](https://www.kaggle.com/datasets/rohan4050/movie-recommendation-data/download?datasetVersionNumber=1)
@@ -132,20 +132,21 @@ kemudian mengubah vektor tf-idf dalam bentuk matriks dengan fungsi todense() dan
 ### Cosone similarity
 Menghitung derajat kesamaan (similarity degree) antar movie dengan teknik cosine similarity pada matrix tf-idf.output menghasilkan keluaran berupa matriks kesamaan dalam bentuk array.
 
-### Mendapatkan Rekomendasi
-Rekomendasi Movie berdasarkan kemiripan dataframe
+## Modeling and Result
+Menggunakan sistem rekomendasi *Content Based Filtering* yaitu menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna. Rekomendasi Movie dibawah bekerja berdasarkan kemiripan dataframe.
 Parameter yang digunakan:
 - nama_movie :  Nama movie (index kemiripan dataframe)
 - similarity_data : Kesamaan dataframe, simetrik, dengan resto sebagai indeks dan kolom
 - items : Mengandung kedua nama dan fitur lainnya yang digunakan untuk mendefinisikan kemiripan
 - k : Banyaknya jumlah rekomendasi yang diberikan. 
 Pada index ini, kita mengambil k dengan nilai similarity terbesar pada index matrix yang diberikan (i).
+Movie yang pernah diliat pengguna adalah Hancock(2008)
 
 |      |    id |     movie_name |                                     genre |
 |-----:|------:|---------------:|------------------------------------------:|
 | 1387 | 60074 | Hancock (2008) | Action\|Adventure\|Comedy\|Crime\|Fantasy |
 
-Selanjutnya, akan diterapkan kode untuk menemukan rekomendasi movie yang mirip dengan movie Hancock.
+Berdasarkan Movie tersebut terdapat 5 rekomendasi movie yang mirip dengan movie Hancock.
 output:
 |   |                                        movie_name |                              genre |
 |--:|--------------------------------------------------:|-----------------------------------:|
@@ -155,6 +156,27 @@ output:
 | 3 | Batman Forever (1995)                             | Action\|Adventure\|Comedy\|Crime   |
 | 4 | Tomb Raider (2018)                                |         Action\|Adventure\|Fantasy |
 
-Yay! Berhasil! Sistem kita memberikan rekomendasi 5 nama movie dengan genre yang mirip dengan movie Hancock.
+
+## Evaluation
+Sistem rekomendasi yang digunakan adalah *Content Based Filtering* yang mempelajari profil minat pengguna baru berdasarkan data dari objek yang telah dinilai pengguna. sistem ini bekerja dengan menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna. Semakin banyak informasi yang diberikan pengguna, semakin baik akurasi sistem rekomendasi. 
+Teknik *Content Based Filtering* akan Mengambil data dengan menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan. kemudian akan mengambil data dengan similarity terbesar dari index yang ada dan drop nama_movie agar nama movie yang dicari tidak muncul dalam daftar rekomendasi.
+
+- Movie Hancock (2008)
+
+|      |    id |     movie_name |                                     genre |
+|-----:|------:|---------------:|------------------------------------------:|
+| 1387 | 60074 | Hancock (2008) | Action\|Adventure\|Comedy\|Crime\|Fantasy |
+
+- 5 rekomendasi movie yang mirip dengan movie diatas.
+
+|   |                                        movie_name |                              genre |
+|--:|--------------------------------------------------:|-----------------------------------:|
+| 0 |                     Forbidden Kingdom, The (2008) | Action\|Adventure\|Comedy\|Fantasy |
+| 1 | Pirates of the Caribbean: The Curse of the Bla... | Action\|Adventure\|Comedy\|Fantasy |
+| 2 | Kingsman: The Secret Service (2015)               | Action\|Adventure\|Comedy\|Crime   |
+| 3 | Batman Forever (1995)                             | Action\|Adventure\|Comedy\|Crime   |
+| 4 | Tomb Raider (2018)                                |         Action\|Adventure\|Fantasy |
+
+Dilihat dari hasil rekomendasi diatas bahwa masing-masing genre memiliki kesamaan terhadap genre dari movie Hancock(2008). Sehingga rekomendasi yang dihasilkan berhasil.
 
 Referensi : [1] [MaylidaIzattulWardah, S. D. (2022). Implementasi Machine Learning Untuk Rekomendasi Film Di Imdb Menggunakan Collaborative Filtering Berdasarkan Analisa Sentimen IMDB. Jurnal Manajemen Informatika Jayakarta.](https://journal.stmikjayakarta.ac.id/index.php/JMIJayakarta/article/view/868/552)
