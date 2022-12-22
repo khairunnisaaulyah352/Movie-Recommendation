@@ -1,22 +1,28 @@
-# Movie Recommendation
+# **Movie Recommendation**
 oleh : Khairunnisa Aulyah
+
+---
 
 ## Domain Proyek
 Dalam sejarahnya, film menjadi media yang sangat berpengaruh jika dibandingkan  dengan  media-media yang lain karena unsur-unsur film dalam bentuk audio dan visual dapat memberikan  kekuatan  universal komunikasi. Pesan-pesan komunikasi terwujud dalam cerita dan misi yang dibawa dalam bentuk drama, action, komedi, dan horor.
 
-Dikarenakan  dengan  semakin  ramainya  penggemar  film. Terkadang  para  penggemar  film  mengalami  kebingungan  saat  mencari  informasi film di internet. Penggemar film terkadang mencari informasi film di beberapa situs  untuk  dibandingkan, tak jarang situs-situs tersebut mempunyai informasi yang berbeda-beda.
+Dikarenakan  dengan  semakin  ramainya  penggemar  film. Terkadang  para  penggemar  film  mengalami  kebingungan  saat  mencari  informasi film di internet. Penggemar film terkadang mencari informasi film di beberapa situs  untuk  dibandingkan, tak jarang situs-situs tersebut mempunyai informasi yang berbeda-beda [1].
 
 Berdasarkan permasalahan tersebut, penelitian ini dilakukan untuk menciptakan sebuah rekomendasi dengan teknik Content Based Filtering. Dengan menggunakan teknik ini sistem akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu dan juga sistem akan merekomendasikan item yang sama dengan yang telah Anda lihat.
 
+---
+
 ## Business Understanding
-###Problem Statement
+#### Problem Statement
 - Berdasarkan data mengenai pengguna, bagaimana membuat sistem rekomendasi yang menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna?
 
-###Goals
+#### Goals
 - Membuat model development yang dapat menghasilkan sejumlah rekomendasi movie yang dipersonalisasi untuk pengguna.
 
-###Solution Statement
+#### Solution Statement
 - Menggunakan teknik content-based filtering yang akan merekomendasikan sejumlah movie berdasarkan item serupa yang pernah disukai  di masa lalu atau sedang dilihat di masa kini kepada pengguna.
+
+---
 
 ## Data Understanding
 penelitian ini menggunakan dataset rekomendasi film yang dapat diunduh di: [Movie Recommenadtion](https://www.kaggle.com/datasets/rohan4050/movie-recommendation-data/download?datasetVersionNumber=1)
@@ -32,7 +38,9 @@ variabel yang digunakan dalam datset ini yaitu:
 - rating : merupakan nilai dari movie tersebut
 
 tahapan Data Understanding yang dilakukan dalam penelitian ini yaitu:
-1. .info() : menampilkan informasi dari variabel yang digunakan. Dalam penelitian ini kita menggunakan 4 variabek
+- .info() : menampilkan informasi dari variabel yang digunakan. Dalam penelitian ini menggunakan 4 variabel
+
+---
 
 ## Data Preprocessing
 Tahapan yang dilakukan paada saat data preprocessing yaitu:
@@ -41,18 +49,17 @@ Tahapan yang dilakukan paada saat data preprocessing yaitu:
  Pertama kita akan Mengindentifikasikan jumlah seluruh movie pada dataset menggunakan library numpy dan fungsi concatenate untuk menggabungkan beberapa file dengan movieId sebagai acuan. output:
 Jumlah seluruh data movie berdasarkan movieID:  9742
 
-### Menggabungkan Seluruh User
+#### Menggabungkan Seluruh User
 Menggunakan  fungsi concatenate dari library numpy untuk menggabungkan seluruh data pada kategori variabel User. 
 output: 
 Jumlah seluruh user:  610
  
-### Mengetahui Jumlah Rating
+#### Mengetahui Jumlah Rating
 Menggabungkan file link, tag, movies ke dalam dataframe movie_info kemudian menggabungkan dataframe rating dengan movie_info berdasarkan nilai movieId.Setelah itu menggunakan fungsi.groupby().sum() unutuk mendapatkan hasil jumlahnya
 output: 
 
-|        |          |        |               |            |          |          |              |
+|        | userId_x | rating | timestamp_x   | imdbId     | tmdbId   | userId_y | timestamp_y  |
 |-------:|---------:|-------:|--------------:|-----------:|---------:|---------:|-------------:|
-|        | userId_x | rating |   timestamp_x |     imdbId |   tmdbId | userId_y |  timestamp_y |
 |      1 |   329520 | 4215.0 | 1214572277395 | 24662435.0 | 185330.0 | 296055.0 | 8.173308e+11 |
 |      2 |   217506 | 2265.0 |  749631499932 | 12484670.0 | 972840.0 |  72600.0 | 6.296298e+11 |
 |      3 |    58988 |  678.0 |  209062937544 |  5887856.0 | 811304.0 |  30056.0 | 1.189162e+11 |
@@ -65,7 +72,7 @@ output:
 | 193587 |      368 |    7.0 |    3074220042 |  8391976.0 | 483455.0 |      0.0 | 0.000000e+00 |
 | 193609 |      362 |    8.0 |    3074315212 |   101726.0 |  37891.0 |      0.0 | 0.000000e+00 |
 
-### Menggabungkan Data dengan Fitur Nama Movie
+#### Menggabungkan Data dengan Fitur Nama Movie
 Pertama definisikan variabel all_movie_rate dengan variabel rating. Selanjutnya, untuk mengetahui nama movie dengan movieId tertentu, kita gabungkan data movies yang berisikan movieId, title dan genres berdasarkan movieId dan assign ke variabel all_movie_name dengan fungsi merge dari library pandas. 
 output: 
 
@@ -77,7 +84,7 @@ output:
 | 3 |      1 |      47 |    5.0 | 964983815 |
 | 4 | 1      | 50      | 5.0    | 964982931 |
 
-### Menggabungkan Data dengan Fitur Tag
+#### Menggabungkan Data dengan Fitur Tag
 Menggabungkan variabel all_MOVE_name yang kita peroleh dari tahapan sebelumnya dengan fitur tag. Tujuannya untuk mengetahui tag setiap movie yang tersedia.
 output: 
 |   | userId | movieId | rating | timestamp |                       title |                                          genres |
@@ -88,9 +95,11 @@ output:
 | 3 |      1 |      47 |    5.0 | 964983815 | Seven (a.k.a. Se7en) (1995) |                               Mystery\|Thriller |
 | 4 |      1 |      50 |    5.0 | 964982931 |  Usual Suspects, The (1995) |                        Crime\|Mystery\|Thriller |
 
+---
+
 ## Data Preparation
 tahapan yang dilakukan: 
-### Mengatasi Misising Value
+#### Mengatasi Misising Value
 pada tahap ini kita akan mengecek missing value menggunakan fungsi .isnull().sum()
 output:
 <p>
@@ -102,7 +111,7 @@ output:
 <p> <img src="https://user-images.githubusercontent.com/71605581/208919124-58853544-4ee4-455a-9504-19fcb02aee10.png" width="180"  height="200"> </p>
  <p> Gambar 2. output drop missing value </p>
 
-### Menyamakan Jenis movie
+#### Menyamakan Jenis movie
 Terkadang, ada beberapa movie yang memeiliki nama sama tatpi kategori berbeda. Jika dibiarkan, hal ini bisa menyebabkan bias pada data. maka kita akan menghapus data yang duplikat dengan fungsi drop_duplicates(). Selanjutnya melakukan konversi data series menjadi list enggunakan fungsi tolist() dari library numpy.
 output: 
 
@@ -119,9 +128,11 @@ output:
 | 1 |  2 |          Jumanji (1995) |                    Adventure\|Children\|Fantasy |
 | 2 |  3 | Grumpier Old Men (1995) |                                 Comedy\|Romance |
 
+---
+
 ## Model Development dengan Content Based Filtering
 
-### TF-IDF Vectorizer
+#### TF-IDF Vectorizer
 pertama kita akan Melakukan perhitungan idf pada data genre dan Mapping array dari fitur index integer ke fitur nama. kemudian Melakukan fit lalu ditransformasikan ke bentuk matrix. 
 output:
 
@@ -129,8 +140,10 @@ output:
 
 kemudian mengubah vektor tf-idf dalam bentuk matriks dengan fungsi todense() dan membuat dataframe untuk melihat tf-idf matrix.output yang dihasilkan akan menunjukkan nama movie dengan nilai matriks pada setiap kategori 0.0 atau >0.0. hal ini berarti setiap movie_name masuk dalam kategori yang berbeda-beda
 
-### Cosone similarity
+#### Cosone similarity
 Menghitung derajat kesamaan (similarity degree) antar movie dengan teknik cosine similarity pada matrix tf-idf.output menghasilkan keluaran berupa matriks kesamaan dalam bentuk array.
+
+---
 
 ## Modeling and Result
 Menggunakan sistem rekomendasi *Content Based Filtering* yaitu menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna. Rekomendasi Movie dibawah bekerja berdasarkan kemiripan dataframe.
@@ -140,43 +153,54 @@ Parameter yang digunakan:
 - items : Mengandung kedua nama dan fitur lainnya yang digunakan untuk mendefinisikan kemiripan
 - k : Banyaknya jumlah rekomendasi yang diberikan. 
 Pada index ini, kita mengambil k dengan nilai similarity terbesar pada index matrix yang diberikan (i).
-Movie yang pernah diliat pengguna adalah Hancock(2008)
+Movie yang pernah diliat pengguna adalah Misery (1990)
 
-|      |    id |     movie_name |                                     genre |
-|-----:|------:|---------------:|------------------------------------------:|
-| 1387 | 60074 | Hancock (2008) | Action\|Adventure\|Comedy\|Crime\|Fantasy |
+|      |    id |     movie_name |                   genre |
+|-----:|------:|---------------:|------------------------:|
+| 718  | 3499  | Misery (1990)  | Drama\|Horror\|Thrille  |
 
-Berdasarkan Movie tersebut terdapat 5 rekomendasi movie yang mirip dengan movie Hancock.
+Berdasarkan Movie tersebut terdapat 5 rekomendasi movie yang mirip dengan movie Misery (1990).
 output:
-|   |                                        movie_name |                              genre |
-|--:|--------------------------------------------------:|-----------------------------------:|
-| 0 |                     Forbidden Kingdom, The (2008) | Action\|Adventure\|Comedy\|Fantasy |
-| 1 | Pirates of the Caribbean: The Curse of the Bla... | Action\|Adventure\|Comedy\|Fantasy |
-| 2 | Kingsman: The Secret Service (2015)               | Action\|Adventure\|Comedy\|Crime   |
-| 3 | Batman Forever (1995)                             | Action\|Adventure\|Comedy\|Crime   |
-| 4 | Tomb Raider (2018)                                |         Action\|Adventure\|Fantasy |
 
+|   |                                  movie_name |                    genre |
+|--:|--------------------------------------------:|-------------------------:|
+| 0 | Rosemary's Baby (1968)	                     | Drama\|Horror\|Thriller  |
+| 1 | Blair Witch Project, The (1999)             | Drama\|Horror\|Thriller  |
+| 2 | What Ever Happened to Baby Jane? (1962)     | Drama\|Horror\|Thriller  |
+| 3 | Babadook, The (2014)                        | Drama\|Horror\|Thriller  |
+| 4 | Mary Reilly (1996)                          | Drama\|Horror\|Thriller  |
+
+---
 
 ## Evaluation
 Sistem rekomendasi yang digunakan adalah *Content Based Filtering* yang mempelajari profil minat pengguna baru berdasarkan data dari objek yang telah dinilai pengguna. sistem ini bekerja dengan menyarankan item serupa yang pernah disukai di masa lalu atau sedang dilihat di masa kini kepada pengguna. Semakin banyak informasi yang diberikan pengguna, semakin baik akurasi sistem rekomendasi. 
 Teknik *Content Based Filtering* akan Mengambil data dengan menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan. kemudian akan mengambil data dengan similarity terbesar dari index yang ada dan drop nama_movie agar nama movie yang dicari tidak muncul dalam daftar rekomendasi.
 
-- Movie Hancock (2008)
+- Movie Misery (1990)
 
-|      |    id |     movie_name |                                     genre |
-|-----:|------:|---------------:|------------------------------------------:|
-| 1387 | 60074 | Hancock (2008) | Action\|Adventure\|Comedy\|Crime\|Fantasy |
+|      |    id |     movie_name |                   genre |
+|-----:|------:|---------------:|------------------------:|
+| 718  | 3499  | Misery (1990)  | Drama\|Horror\|Thrille  |
 
 - 5 rekomendasi movie yang mirip dengan movie diatas.
 
-|   |                                        movie_name |                              genre |
-|--:|--------------------------------------------------:|-----------------------------------:|
-| 0 |                     Forbidden Kingdom, The (2008) | Action\|Adventure\|Comedy\|Fantasy |
-| 1 | Pirates of the Caribbean: The Curse of the Bla... | Action\|Adventure\|Comedy\|Fantasy |
-| 2 | Kingsman: The Secret Service (2015)               | Action\|Adventure\|Comedy\|Crime   |
-| 3 | Batman Forever (1995)                             | Action\|Adventure\|Comedy\|Crime   |
-| 4 | Tomb Raider (2018)                                |         Action\|Adventure\|Fantasy |
+|   |                                  movie_name |                    genre |
+|--:|--------------------------------------------:|-------------------------:|
+| 0 | Rosemary's Baby (1968)	                     | Drama\|Horror\|Thriller  |
+| 1 | Blair Witch Project, The (1999)             | Drama\|Horror\|Thriller  |
+| 2 | What Ever Happened to Baby Jane? (1962)     | Drama\|Horror\|Thriller  |
+| 3 | Babadook, The (2014)                        | Drama\|Horror\|Thriller  |
+| 4 | Mary Reilly (1996)                          | Drama\|Horror\|Thriller  |
 
-Dilihat dari hasil rekomendasi diatas bahwa masing-masing genre memiliki kesamaan terhadap genre dari movie Hancock(2008). Sehingga rekomendasi yang dihasilkan berhasil.
+Dilihat dari hasil rekomendasi diatas bahwa masing-masing genre memiliki kesamaan terhadap genre dari movie Misery (1990). Diketahui bahwa movie  Misery (1990) termasuk ke dalam kategori Drama, Horor dan Thriller. Dari 5 item yang direkomendasikan, semua item memiliki kategori Drama, Horor dan Thriller (similar). Artinya, precision sistem sebesar 5/5 atau 100%. Hal ini didapat dari rumus recommender system precisoon yaitu:
+
+Precision = #of recommendation that are relevant/#of item we recommend.
+
+---
+
+## Conclusion
+Penelitian ini menggunakan model development *Content Based Filtering*. Dari Penelitian yang sudah dilakukan, dapat dilihat bahwa sistem rekomendasi tersebut menghasilkan sejumlah rekomendasi movie yang dipersonalisasi untuk pengguna.Sebagai contoh Movie yang diambil adalah movie Misery (1990) dengan kategori Drama, Horor dan Thriller . 5 item yang direkomendasikan masuk kedalam semua kategori tersebut. sehingga penelitian ini dianggap berhasil.
+
+---
 
 Referensi : [1] [MaylidaIzattulWardah, S. D. (2022). Implementasi Machine Learning Untuk Rekomendasi Film Di Imdb Menggunakan Collaborative Filtering Berdasarkan Analisa Sentimen IMDB. Jurnal Manajemen Informatika Jayakarta.](https://journal.stmikjayakarta.ac.id/index.php/JMIJayakarta/article/view/868/552)
